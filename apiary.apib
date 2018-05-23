@@ -3,78 +3,68 @@ HOST: http://polls.apiblueprint.org/
 
 # olajuwon99
 
-Polls is a simple API allowing consumers to view polls and vote in them.
 
-## Questions Collection [/questions]
+## User [/user]
 
-### List All Questions [GET]
+### List All Users [GET]
 
 + Response 200 (application/json)
 
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "_id": "string",
+                "dateOfBirth": "2018-05-23T04:51:40.862Z",
+                "realm": "string",
+                "username": "string",
+                "credentials": {},
+                "challenges": {},
+                "email": "string",
+                "emailVerified": true,
+                "status": "string",
+                "created": "2018-05-23T04:51:40.862Z",
+                "lastUpdated": "2018-05-23T04:51:40.862Z",
+                "locationRef": "string",
+                "_lmt": "2018-05-23T04:51:40.862Z",
+                "_ect": "2018-05-23T04:51:40.862Z",
+                "_tenantRef": "string"
             }
         ]
 
-### Create a New Question [POST]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### Create a New User [POST]
+
+You may create your own user using this action. It takes a JSON
+object containing user details and under which security group it's in.
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "first_name": "Hakeem",
+            "last_name": "Olajuwon",
+            "email": "olajuwon99@houston.com",
+            "username": "olajuwon99@houston.com",
+            "password": "123456",
+            "language": "en",
+            "groups": ["houston", "toronto"],
+            "tags": ["The Dream", "Hakeem the Dream Olajuwon"],
+            "client_role": "Advisor"
         }
 
-+ Response 201 (application/json)
++ Response 200 (application/json)
 
-    + Headers
-
-            Location: /questions/2
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "_id": "uuid",
+                "username": "olajuwon99@houston.com",
+                "email": "olajuwon99@houston.com",
+                "created": "2018-05-23T04:51:40.862Z",
+                "lastUpdated": "2018-05-23T04:51:40.862Z",
+                "_lmt": "2018-05-23T04:51:40.862Z",
+                "_ect": "2018-05-23T04:51:40.862Z",
+                "_tenantRef": "HOU",
+                "tags": ["The Dream", "Hakeem the Dream Olajuwon"],
+                "client_role": "Advisor"
+
             }
