@@ -1,0 +1,19 @@
+{
+  "name": "apiary",
+  "version": "1.0.0",
+  "description": "Public REST API playground",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olajuwon99/apiary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olajuwon99/apiary/issues"
+  },
+  "homepage": "https://github.com/olajuwon99/apiary#readme"
+}
