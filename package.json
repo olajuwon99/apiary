@@ -2,18 +2,37 @@
   "name": "apiary",
   "version": "1.0.0",
   "description": "Public REST API playground",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "eslint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "SERVER_URL=localhost PORT=3000 node server.js",
+    "server:debug": "SERVER_URL=localhost PORT=3000 nodemon --inspect=${DEBUG-5859} --nolazy"
+  },
+  "engines": {
+    "node": "8.9.4"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/olajuwon99/apiary.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/olajuwon99/apiary/issues"
   },
-  "homepage": "https://github.com/olajuwon99/apiary#readme"
+  "homepage": "https://github.com/olajuwon99/apiary#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-plugin-nodeca": "^1.0.3",
+    "nodemon": "^1.17.5"
+  }
 }
