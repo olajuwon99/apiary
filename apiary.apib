@@ -13,6 +13,12 @@ HOST: http://192.168.1.148:3001
 
 ### Get User Details [GET]
 Get user details for the given user_id.
++ Request
+    + Headers
+        
+            Authorization: Bearer {token}
+            Accept: application/json
+            
 + Response 200 (application/json)
 
         {
@@ -30,6 +36,11 @@ Get user details for the given user_id.
         
 ### Delete User [DELETE]
 Delete user by id.
++ Request
+    + Headers
+        
+            Authorization: Bearer {token}
+
 + Response 204
 
 ### Update User [PUT]
@@ -37,13 +48,16 @@ Update a single user.
 + Request (application/json)
         
         {
-            "_id": "uuid",
             "username": "olajuwon99@houston.com",
             "email": "olajuwon99@houston.com",
-            "_tenantRef": "HOU",
-            "tags": ["The Dream", "Hakeem the Dream Olajuwon"],
+            "tags": ["The Dream", "Hakeem the Dream Olajuwon", "The Dream Shake"],
             "role": "Advisor"
         }
+
+    + Headers
+        
+            Authorization: Bearer {token}
+            Accept: application/json
         
 + Response 200 (application/json)
 
@@ -56,7 +70,35 @@ Update a single user.
             "_lmt": "2018-05-23T04:51:40.862Z",
             "_ect": "2018-05-23T04:51:40.862Z",
             "_tenantRef": "HOU",
-            "tags": ["The Dream", "Hakeem the Dream Olajuwon"],
+            "tags": ["The Dream", "Hakeem the Dream Olajuwon", "The Dream Shake"],
+            "role": "Advisor"
+        }
+        
+### Update property [PATCH]
+Update subset of properties of user
++ Request (application/json)
+        
+        {
+            "tags": ["The Dream", "Hakeem the Dream Olajuwon", "The Dream Shake"]
+        }
+
+    + Headers
+        
+            Authorization: Bearer {token}
+            Accept: application/json
+        
++ Response 200 (application/json)
+
+        {
+            "_id": "uuid",
+            "username": "olajuwon99@houston.com",
+            "email": "olajuwon99@houston.com",
+            "created": "2018-05-23T04:51:40.862Z",
+            "lastUpdated": "2018-05-23T04:51:40.862Z",
+            "_lmt": "2018-05-23T04:51:40.862Z",
+            "_ect": "2018-05-23T04:51:40.862Z",
+            "_tenantRef": "HOU",
+            "tags": ["The Dream", "Hakeem the Dream Olajuwon", , "The Dream Shake"],
             "role": "Advisor"
         }
         
@@ -80,6 +122,11 @@ object containing user details and under which security group it's in.
             "tags": ["The Dream", "Hakeem the Dream Olajuwon"],
             "role": "Advisor"
         }
+        
+    + Headers
+        
+            Authorization: Bearer {token}
+            Accept: application/json
 
 + Response 200 (application/json)
 
@@ -102,6 +149,11 @@ object containing user details and under which security group it's in.
 
 ### List All Users [GET]
 List all users.
++ Request
+    + Headers
+        
+            Authorization: Bearer {token}
+            Accept: application/json
 
 + Response 200 (application/json)
 
