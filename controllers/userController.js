@@ -1,58 +1,62 @@
 'use strict';
 
 global.Promise = require('bluebird');
-const { Router } = require('express');
-const router = Router();
-const { urlencoded, json } = require('body-parser');
-router.use(urlencoded({ extended: true }));
-router.use(json());
-
 const userService = require('../services/userService');
+module.exports = function(router) {
 
-// CREATES A NEW USER
-router.post('/', (req, res) => {
-    const token = req.headers.authorization;
-    return userService.createUser(req.body, token)
-        .then(user => {
-            return res.status(200).send(user);
-        });
-});
+    // CREATES A NEW USER
+    router.post('/', (req, res, next) => {
+        const token = req.headers.authorization;
+        userService.createUser(req.body, token)
+            .then(user => {
+                res.status(200).send(user);
+            })
+            .catch(next);
+    });
 
-// RETURNS ALL THE USERS IN THE DATABASE
-router.get('/', (req, res) => {
-    const token = req.headers.authorization;
-    return userService.getUsers(token)
-        .then(users => {
-            return res.status(200).send(users);
-        });
-});
+    // RETURNS ALL THE USERS IN THE DATABASE
+    router.get('/', (req, res, next) => {
+        const token = req.headers.authorization;
+        userService.getUsers(token)
+            .then(users => {
+                res.status(200).send(users);
+            })
+            .catch(next);
+    });
 
-// GETS A SINGLE USER FROM THE DATABASE
-router.get('/:id', (req, res) => {
-    const token = req.headers.authorization;
-    return userService.getUser(req.params.id, token)
-        .then(user => {
-            if (!user) {
-                return res.status(404).send('No user found.');
-            }
-            return res.status(200).send(user);
-        });
-});
+    // GETS A SINGLE USER FROM THE DATABASE
+    router.get('/:id', (req, res, next) => {
+        const token = req.headers.authorization;
+        userService.getUser(req.params.id, token)
+            .then(user => {
+                res.status(200).send(user);
+            })
+            .catch(next);
+    });
 
-// DELETES A USER FROM THE DATABASE
-/* router.delete('/:id', (req, res) => {
-    return userService.findByIdAndRemove(req.params.id)
-        .then(user => {
-            return res.status(200).send('User ' + user.name + ' was deleted.');
-        });
-}); */
+    // DELETES A USER FROM THE DATABASE
+    router.delete('/:id', (req, res, next) => {
+        const userId = req.params.id;
+        const token = req.headers.authorization;
 
-// UPDATES A SINGLE USER IN THE DATABASE
-/* router.put('/:id', (req, res) => {
-    return userService.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .then(user => {
-            return res.status(200).send(user);
-        });
-}); */
+        userService.deleteUser(userId, token)
+            .then(() => {
+                res.status(204);
+            })
+            .catch(next);
+    });
 
-module.exports = router;
+    // UPDATES A SINGLE USER IN THE DATABASE
+    router.put('/:id', (req, res, next) => {
+        const userId = req.params.id;
+        const token = req.headers.authorization;
+
+        return userService.updateUser(userId, req.body, token)
+            .then(user => {
+                return res.status(200).send(user);
+            })
+            .catch(next);
+    });
+
+    return router;
+};

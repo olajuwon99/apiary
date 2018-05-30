@@ -1,17 +1,9 @@
 'use strict';
 
 const rp = require('request-promise');
-const debugLogRequests = require('debug')('http');
+const logger = require('debug')('http');
 const _ = require('lodash');
 
-/**
- * Executes a json request
- * @param  {Object} options            request params
- * @param  {string} options.verb       http verb (get, post, etc...) defaults to GET
- * @param  {string} options.url        url of the request
- * @param  {bool}   [options.useApp]   use server instead of server.server to resolve the protocol of the request. server resolves to http. server.server resolves to the real protocol.
- * @returns {Promise}                  supertest request promise
- */
 const request = ({ verb = 'GET', url, body, token, headers = {}, qs = {}, ...options } = {}) => {
     const defaultHeader = {
         'Content-Type': 'application/json',
@@ -31,13 +23,31 @@ const request = ({ verb = 'GET', url, body, token, headers = {}, qs = {}, ...opt
         transform2xxOnly: true
     };
 
-    debugLogRequests('request is:', verb, url, body);
+    logger('request is:', verb, url, body);
     return rp(reqOptions)
-        .catch(errorHandler);
+        .then(removeEmptyProperties);
 };
 
-const errorHandler = (error) => {
-    return _.pick(error, ['statusCode', 'response.body.message']);
+const removeEmptyProperties = (body) => {
+    return _.isArray(body) ? _.compact(body) : _.omitBy(body, _.isEmpty);
+};
+
+const errorHandler = (err, req, res, next) => {
+
+    res.status(500).send('you are bad');
+    const resError = new Error();
+    let { statusCode, options: { method }, ...response } =
+    _.pick(err, ['statusCode', 'options.method', 'response.body.message', 'response.body.error.message']);
+
+    res.status(statusCode);
+    resError.message = response.message || response.errMsg || `${method} operation failed`;
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    logger('\nError caught ', JSON.stringify(resError));
+    res.send({ error: resError });
+    return resError;
 };
 
 module.exports = {

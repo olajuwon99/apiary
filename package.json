@@ -7,7 +7,7 @@
     "eslint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "SERVER_URL=localhost PORT=3000 node server.js",
-    "server:debug": "SERVER_URL=localhost PORT=3000 nodemon --inspect=${DEBUG-5859} --nolazy"
+    "server:debug": "BLUEBIRD_DEBUG=1 SERVER_URL=localhost PORT=3000 nodemon --inspect=${DEBUG-5859} --nolazy"
   },
   "engines": {
     "node": "8.9.4"

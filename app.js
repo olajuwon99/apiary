@@ -3,7 +3,6 @@
 const express = require('express');
 const app = express();
 
-const userController = require('./controllers/userController');
-app.use('/users', userController);
+require('./controllers')(app);
 
 module.exports = app;

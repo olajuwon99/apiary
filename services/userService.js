@@ -22,7 +22,7 @@ const getUsers = (token) => {
         token,
         qs: {
             filter: {
-                fields: ['_id', 'username', 'email', 'firstName', 'lastName', '_lmt', '_ect', '_tenantRef', 'tags', 'role']
+                fields: ['_id', 'firstName', 'lastName']
             }
         }
     });
@@ -35,14 +35,33 @@ const getUser = (userId, token) => {
         token,
         qs: {
             filter: {
-                fields: ['_id', 'username', 'email', 'firstName', 'lastName', '_lmt', '_ect', '_tenantRef', 'tags', 'role']
+                fields: ['_id', 'username', 'email', 'firstName', 'lastName', '_lmt', '_ect', '_tenantRef', 'tags', 'role', 'language', 'company', 'address']
             }
         }
+    });
+};
+
+const deleteUser = (userId, token) => {
+    return request({
+        verb: 'DELETE',
+        url: `${URL}/${userId}`,
+        token
+    });
+};
+
+const updateUser = (userId, user, token) => {
+    return request({
+        verb: 'PUT',
+        url: `${URL}/${userId}`,
+        body: user,
+        token
     });
 };
 
 module.exports = {
     createUser,
     getUsers,
-    getUser
+    getUser,
+    deleteUser,
+    updateUser
 };
