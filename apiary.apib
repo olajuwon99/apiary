@@ -1,35 +1,66 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://192.168.1.148:3001
+
 
 # olajuwon99
 
 
-## User [/users]
+# Group User
 
-### List All Users [GET]
+## Existing User Operations [/users/{user_id}]
++ Parameters
+    + user_id (number) - ID of the User in the form of an integer
 
+### Get User Details [GET]
+Get user details for the given user_id.
 + Response 200 (application/json)
 
-        [
-            {
-                "_id": "string",
-                "dateOfBirth": "2018-05-23T04:51:40.862Z",
-                "realm": "string",
-                "username": "string",
-                "credentials": {},
-                "challenges": {},
-                "email": "string",
-                "emailVerified": true,
-                "status": "string",
-                "created": "2018-05-23T04:51:40.862Z",
-                "lastUpdated": "2018-05-23T04:51:40.862Z",
-                "locationRef": "string",
-                "_lmt": "2018-05-23T04:51:40.862Z",
-                "_ect": "2018-05-23T04:51:40.862Z",
-                "_tenantRef": "string"
-            }
-        ]
+        {
+            "_id": "uuid",
+            "username": "olajuwon99@houston.com",
+            "email": "olajuwon99@houston.com",
+            "created": "2018-05-23T04:51:40.862Z",
+            "lastUpdated": "2018-05-23T04:51:40.862Z",
+            "_lmt": "2018-05-23T04:51:40.862Z",
+            "_ect": "2018-05-23T04:51:40.862Z",
+            "_tenantRef": "HOU",
+            "tags": ["The Dream", "Hakeem the Dream Olajuwon"],
+            "role": "Advisor"
+        }
+        
+### Delete User [DELETE]
+Delete user by id.
++ Response 204
 
+### Update User [PUT]
+Update a single user.
++ Request (application/json)
+        
+        {
+            "_id": "uuid",
+            "username": "olajuwon99@houston.com",
+            "email": "olajuwon99@houston.com",
+            "_tenantRef": "HOU",
+            "tags": ["The Dream", "Hakeem the Dream Olajuwon"],
+            "role": "Advisor"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "_id": "uuid",
+            "username": "olajuwon99@houston.com",
+            "email": "olajuwon99@houston.com",
+            "created": "2018-05-23T04:51:40.862Z",
+            "lastUpdated": "2018-05-23T04:51:40.862Z",
+            "_lmt": "2018-05-23T04:51:40.862Z",
+            "_ect": "2018-05-23T04:51:40.862Z",
+            "_tenantRef": "HOU",
+            "tags": ["The Dream", "Hakeem the Dream Olajuwon"],
+            "role": "Advisor"
+        }
+        
+## Users Operations [/users]
 
 ### Create a New User [POST]
 
@@ -68,3 +99,21 @@ object containing user details and under which security group it's in.
                 "client_role": "Advisor"
 
             }
+
+### List All Users [GET]
+List all users.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "_id": "string",
+                "firstName": "Jon",
+                "lastName": "Doe"
+            },
+            {
+                "_id": "string",
+                "firstName": "Jane",
+                "lastName": "Doe"
+            }
+        ]
