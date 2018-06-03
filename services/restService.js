@@ -23,7 +23,7 @@ const request = ({ verb = 'GET', url, body, token, headers = {}, qs = {}, ...opt
         transform2xxOnly: true
     };
 
-    logger('request is:', verb, url, body);
+    logger('request is:', verb, url, body || '');
     return rp(reqOptions)
         .then(removeEmptyProperties);
 };
@@ -32,25 +32,4 @@ const removeEmptyProperties = (body) => {
     return _.isArray(body) ? _.compact(body) : _.omitBy(body, _.isEmpty);
 };
 
-const errorHandler = (err, req, res, next) => {
-
-    res.status(500).send('you are bad');
-    const resError = new Error();
-    let { statusCode, options: { method }, ...response } =
-    _.pick(err, ['statusCode', 'options.method', 'response.body.message', 'response.body.error.message']);
-
-    res.status(statusCode);
-    resError.message = response.message || response.errMsg || `${method} operation failed`;
-    if (res.headersSent) {
-        return next(err);
-    }
-
-    logger('\nError caught ', JSON.stringify(resError));
-    res.send({ error: resError });
-    return resError;
-};
-
-module.exports = {
-    request,
-    errorHandler
-};
+module.exports = request;

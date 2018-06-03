@@ -3,7 +3,7 @@ const _ = require('lodash');
 const { Router } = require('express');
 const { urlencoded, json } = require('body-parser');
 
-const { errorHandler } = require('../services/restService');
+const errorHandler = require('../services/errorService');
 
 module.exports = function(app) {
 
@@ -11,16 +11,22 @@ module.exports = function(app) {
     app.use(urlencoded({ extended: true }));
     app.use(json());
 
-    const userController = require('./userController')(Router());
+    const userController = require('./userController');
 
-    // todo - change to resource: { route, controller }
     const ROUTES = {
         users: userController
     };
     _.each(ROUTES, (controller, route) => {
-        app.use(`/${route}`, controller);
+        const router = injectRouter(controller);
+        app.use(`/${route}`, router);
     });
     // after
     app.use(errorHandler);
 
+};
+
+const injectRouter = (controller) => {
+    const router = Router();
+    controller(router);
+    return router;
 };

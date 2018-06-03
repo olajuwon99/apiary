@@ -1,9 +1,8 @@
 'use strict';
 
-const { request } = require('./restService');
+const request = require('./restService');
 
-/* todo - implementation of the REST operations */
-// todo - add validation prior CRUD operations
+// todo - add validation prior CRUD operations (schema validation)
 const URL = '/api/user';
 
 const createUser = (user, token) => {
@@ -58,10 +57,20 @@ const updateUser = (userId, user, token) => {
     });
 };
 
+const updateUserProperties = (userId, user, token) => {
+    return request({
+        verb: 'PATCH',
+        url: `${URL}/${userId}`,
+        body: user,
+        token
+    });
+};
+
 module.exports = {
     createUser,
     getUsers,
     getUser,
     deleteUser,
-    updateUser
+    updateUser,
+    updateUserProperties
 };

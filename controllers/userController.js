@@ -2,9 +2,10 @@
 
 global.Promise = require('bluebird');
 const userService = require('../services/userService');
+const { validateId } = require('../services/validateService');
+
 module.exports = function(router) {
 
-    // CREATES A NEW USER
     router.post('/', (req, res, next) => {
         const token = req.headers.authorization;
         userService.createUser(req.body, token)
@@ -14,7 +15,6 @@ module.exports = function(router) {
             .catch(next);
     });
 
-    // RETURNS ALL THE USERS IN THE DATABASE
     router.get('/', (req, res, next) => {
         const token = req.headers.authorization;
         userService.getUsers(token)
@@ -24,7 +24,8 @@ module.exports = function(router) {
             .catch(next);
     });
 
-    // GETS A SINGLE USER FROM THE DATABASE
+    router.param('id', validateId);
+
     router.get('/:id', (req, res, next) => {
         const token = req.headers.authorization;
         userService.getUser(req.params.id, token)
@@ -34,7 +35,6 @@ module.exports = function(router) {
             .catch(next);
     });
 
-    // DELETES A USER FROM THE DATABASE
     router.delete('/:id', (req, res, next) => {
         const userId = req.params.id;
         const token = req.headers.authorization;
@@ -46,7 +46,6 @@ module.exports = function(router) {
             .catch(next);
     });
 
-    // UPDATES A SINGLE USER IN THE DATABASE
     router.put('/:id', (req, res, next) => {
         const userId = req.params.id;
         const token = req.headers.authorization;
@@ -58,5 +57,14 @@ module.exports = function(router) {
             .catch(next);
     });
 
-    return router;
+    router.patch('/:id', (req, res, next) => {
+        const userId = req.params.id;
+        const token = req.headers.authorization;
+
+        return userService.updateUserProperties(userId, req.body, token)
+            .then(user => {
+                return res.status(200).send(user);
+            })
+            .catch(next);
+    });
 };

@@ -23,7 +23,7 @@ Get user details for the given user_id.
 + Request
     + Headers
         
-            Authorization: Bearer {token}
+            Authorization: Bearer `JWT`
             Accept: application/json
             
 + Response 200 (application/json)
@@ -46,7 +46,7 @@ Delete user by id.
 + Request
     + Headers
         
-            Authorization: Bearer {token}
+            Authorization: Bearer `JWT`
 
 + Response 204
 
@@ -63,7 +63,7 @@ Update a single user.
 
     + Headers
         
-            Authorization: Bearer {token}
+            Authorization: Bearer `JWT`
             Accept: application/json
         
 + Response 200 (application/json)
@@ -91,7 +91,7 @@ Update subset of properties of user
 
     + Headers
         
-            Authorization: Bearer {token}
+            Authorization: Bearer `JWT`
             Accept: application/json
         
 + Response 200 (application/json)
@@ -132,7 +132,7 @@ object containing user details and under which security group it's in.
         
     + Headers
         
-            Authorization: Bearer {token}
+            Authorization: Bearer `JWT`
             Accept: application/json
 
 + Response 200 (application/json)
@@ -159,7 +159,7 @@ List all users.
 + Request
     + Headers
         
-            Authorization: Bearer {token}
+            Authorization: Bearer `JWT`
             Accept: application/json
 
 + Response 200 (application/json)
