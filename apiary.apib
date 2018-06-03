@@ -16,14 +16,14 @@ The endpoints are intuitive and powerful, allowing you to easily make calls to r
 
 ## Existing User Operations [/users/{user_id}]
 + Parameters
-    + user_id (number) - ID of the User in the form of an integer
+    + user_id (number, optional) - ID of the User in the form of an integer
 
 ### Get User Details [GET]
 Get user details for the given user_id.
 + Request
     + Headers
         
-            Authorization: Bearer `JWT`
+            Authorization: Bearer {token}
             Accept: application/json
             
 + Response 200 (application/json)
@@ -46,7 +46,7 @@ Delete user by id.
 + Request
     + Headers
         
-            Authorization: Bearer `JWT`
+            Authorization: Bearer {token}
 
 + Response 204
 
@@ -63,7 +63,7 @@ Update a single user.
 
     + Headers
         
-            Authorization: Bearer `JWT`
+            Authorization: Bearer {token}
             Accept: application/json
         
 + Response 200 (application/json)
@@ -91,7 +91,7 @@ Update subset of properties of user
 
     + Headers
         
-            Authorization: Bearer `JWT`
+            Authorization: Bearer {token}
             Accept: application/json
         
 + Response 200 (application/json)
@@ -132,7 +132,7 @@ object containing user details and under which security group it's in.
         
     + Headers
         
-            Authorization: Bearer `JWT`
+            Authorization: Bearer {token}
             Accept: application/json
 
 + Response 200 (application/json)
@@ -142,6 +142,8 @@ object containing user details and under which security group it's in.
 
             {
                 "_id": "uuid",
+                "first_name": "Hakeem",
+                "last_name": "Olajuwon",
                 "username": "olajuwon99@houston.com",
                 "email": "olajuwon99@houston.com",
                 "created": "2018-05-23T04:51:40.862Z",
@@ -157,9 +159,10 @@ object containing user details and under which security group it's in.
 ### List All Users [GET]
 List all users.
 + Request
+    + Attributes
+        - Authorization (Default Header)
     + Headers
-        
-            Authorization: Bearer `JWT`
+    
             Accept: application/json
 
 + Response 200 (application/json)
@@ -176,3 +179,7 @@ List all users.
                 "lastName": "Doe"
             }
         ]
+        
+# Data Structures
+## Default Header (object)
++ `Authorization`: `Bearer JWT` (string, required)
