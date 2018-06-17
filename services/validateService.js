@@ -10,6 +10,15 @@ const validateId = (req, res, next, id) => {
     }
 };
 
+const validateTenantExists = (entity) => {
+    if (!entity.tenant) {
+        const err = new Error('Missing tenant property');
+        err.statusCode = 400;
+        throw err;
+    }
+};
+
 module.exports = {
-    validateId
+    validateId,
+    validateTenantExists
 };

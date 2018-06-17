@@ -1,11 +1,13 @@
 'use strict';
 
 const request = require('./restService');
+const { validateTenantExists } = require('./validateService');
 
 // todo - add validation prior CRUD operations (schema validation)
 const URL = '/api/user';
 
 const createUser = (user, token) => {
+    validateTenantExists(user);
     return request({
         verb: 'POST',
         url: URL,
